@@ -3,9 +3,17 @@ const auth = require(`@qnzl/auth`)
 
 const { CLAIMS } = auth
 
-const trello = new Trello(process.env.TRELLO_KEY, process.env.TRELLO_TOKEN)
+const {
+  TRELLO_KEY,
+} = process.env
 
 const handler = async (req, res) => {
+  const {
+    [`x-trello-access-token`]: token
+  } = req.headers
+
+  const trello = new Trello(TRELLO_KEY, token)
+
   const boards = await trello.getBoards(req.query.org || `me`)
 
   let cards = boards.map((board) => {
