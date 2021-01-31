@@ -1,6 +1,8 @@
 const Trello = require(`trello`)
 const auth = require(`@qnzl/auth`)
 
+const authCheck = require(`./_lib/auth`)
+
 const { CLAIMS } = auth
 
 const {

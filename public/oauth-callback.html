@@ -4,7 +4,7 @@
       const [ _, token ] = window.location.hash.split(`token=`)
       const [ __, id ] = window.location.search.split(`id=`)
 
-      fetch(`/api/oauth-callback-server?id=${id}`, {
+      fetch(`/api/oauth-callback?id=${id}`, {
           method: `POST`,
           body: JSON.stringify({
             token,

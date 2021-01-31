@@ -9,7 +9,7 @@ module.exports = (req, res) => {
     throw new Error(`TRELLO_TOKEN_NAME isn't set`)
   }
 
-  const returnUrl = encodeURI(`${TRELLO_CALLBACK}/oauth-callback?id=123`)
+  const returnUrl = encodeURI(`${TRELLO_CALLBACK}/oauth-callback?id=HEAD`)
 
   const url = `https://trello.com/1/authorize?expiration=${req.query.exp || `30days`}&name=${TRELLO_TOKEN_NAME}&scope=read&response_type=token&key=${TRELLO_KEY}&callback_method=fragment&return_url=${returnUrl}`
 

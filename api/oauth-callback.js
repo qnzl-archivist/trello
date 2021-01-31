@@ -10,6 +10,10 @@ module.exports = async (req, res) => {
   const { id } = req.query
   const { token } = req.body
 
+  if (id === `HEAD`) {
+    return res.json({ token })
+  }
+
   const redisClient = redis.createClient()
 
   const message = JSON.stringify({
