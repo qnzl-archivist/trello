@@ -1,22 +1,25 @@
 const Trello = require(`trello`)
-const auth = require(`@qnzl/auth`)
-
-const authCheck = require(`./_lib/auth`)
-
-const { CLAIMS } = auth
 
 const {
   TRELLO_KEY,
 } = process.env
 
-const handler = async (req, res) => {
-  const {
-    [`x-trello-access-token`]: token
-  } = req.headers
+module.exports = async (req, res) => {
+  const [ type, auth ] = req.headers[`authorization`].split(` `)
+
+  if (!type && !auth) {
+    return res.sendStatus(401)
+  }
+
+  const [ token ] = Buffer.from(auth, `base64`).toString(`utf8`).split(`:`)
+
+  if (!token) {
+    return res.sendStatus(401)
+  }
 
   const trello = new Trello(TRELLO_KEY, token)
 
-  const boards = await trello.getBoards(req.query.org || `me`)
+  const boards = await trello.getBoards(`me`)
 
   let cards = boards.map((board) => {
     return trello.getCardsOnBoard(board.id)
@@ -30,9 +33,5 @@ const handler = async (req, res) => {
     return board
   })
 
-  return res.json(boardsWithCards)
-}
-
-module.exports = (req, res) => {
-  return authCheck(CLAIMS.trello.dump)(req, res, handler)
+  return res.json({ [`yourBoards`]: boardsWithCards })
 }
