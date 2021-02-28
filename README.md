@@ -1,4 +1,4 @@
-## @watchers/trello
+## trello
 
 ### Setup
 
