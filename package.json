@@ -2,15 +2,20 @@
   "name": "@qnzl/trello",
   "version": "1.0.0",
   "description": "",
+  "bin": {
+    "trello": "bin/trello.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "vercel dev --listen 3006"
+    "build": "pkg bin/trello.js --out-path pkg/"
   },
   "author": "Madeline Cameron <maddie@qnzl.co>",
   "license": "MIT",
   "dependencies": {
-    "@qnzl/auth": "^1.0.0",
-    "redis": "^3.0.2",
+    "commander": "^7.1.0",
+    "dayjs": "^1.10.4",
     "trello": "^0.9.1"
+  },
+  "devDependencies": {
+    "pkg": "^4.4.9"
   }
 }
