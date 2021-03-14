@@ -24,7 +24,8 @@ function exit(code) {
 program
   .command('dump')
   .description('Dump to file')
-  .option('-t, --token [token]', 'OAuth access token')
+  .option('-t, --token [token]', 'Auth token')
+  .option('-o, --org <org>', 'Board organization', 'me')
   .option('--client-id [id]', 'Client ID')
   .option('--export-format <format>', 'Export file format', '{date}-trello.json')
   .option('--export-path [path]', 'Export file path')
@@ -39,7 +40,6 @@ async function dump({
   exportPath,
   exportFormat,
 }) {
-
   const filledExportFormat = exportFormat
     .replace('{date}', dayjs().format('YYYY-MM-DD'))
 
@@ -49,7 +49,6 @@ async function dump({
 
   const boards = await trello.getBoards(org || 'me')
 
-  console.log("BOARDS:", boards)
   let cards = boards.map((board) => {
     return trello.getCardsOnBoard(board.id)
   })
